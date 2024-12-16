@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Tasks</h2>
+<a href="{{ url_for('task_form') }}" class="btn btn-primary mb-3">Add New Task</a>
+<ul class="list-group">
+    {% for task in tasks %}
+        <li class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <span class="task-content {% if task.completed %}text-decoration-line-through{% endif %}">
+                    {{ task.content }}
+                </span>
+                <div>
+                    <a href="{{ url_for('task_form', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    <a href="{{ url_for('update_task', task_id=task.id) }}" class="btn btn-info btn-sm">
+                        {% if task.completed %}Mark Incomplete{% else %}Mark Complete{% endif %}
+                    </a>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
